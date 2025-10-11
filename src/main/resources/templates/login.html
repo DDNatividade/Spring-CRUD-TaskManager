@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Login - MyTasks</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+	crossorigin="anonymous">
+</head>
+<body class="bg-light">
+
+	<div
+		class="container vh-100 d-flex justify-content-center align-items-center">
+		<div class="col-md-4 bg-white p-4 rounded shadow-sm">
+			<h3 class="text-center mb-4">Login</h3>
+
+			<form th:action="@{/}" th:object="${user}" method="post">
+				<div class="mb-3">
+					<label for="email" class="form-label">Email</label> <input
+						type="email" id="email" name="email" class="form-control"
+						placeholder="Enter your email">
+					<div class="text-danger small"
+						th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+				</div>
+
+				<div class="mb-3">
+					<label for="password" class="form-label">Password</label> <input
+						type="password" id="password" name="password" class="form-control"
+						placeholder="Enter your password">
+					<div class="text-danger small"
+						th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+				</div>
+				<div class="d-grid gap-2">
+
+					<button type="submit" class="btn btn-primary btn-lg">Login</button>
+					<div th:if="${#fields.hasGlobalErrors()}"
+						class="text-danger small">
+						<p th:each="err : ${#fields.globalErrors}" th:text="${err}"></p>
+					</div>
+
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+		crossorigin="anonymous"></script>
+</body>
+</html>

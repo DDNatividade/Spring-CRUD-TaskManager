@@ -4,10 +4,16 @@ import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name="tasks")
@@ -18,11 +24,18 @@ public class Tasks {
 	private String name;
 	@Column(columnDefinition = "TEXT")
 	private String description;
+	
+	@Enumerated(value=EnumType.STRING)
 	private Priority priority;
+	
+	@Temporal(TemporalType.DATE)
 	private Date dueDate;
+	
 	private String category;
 	
-	private String userMail;
+	@ManyToOne
+	@JoinColumn(name="email")
+	private User user;
 
 	public int getId() {
 		return id;
@@ -65,13 +78,6 @@ public class Tasks {
 		this.category = category;
 	}
 
-	public String getUserMail() {
-		return userMail;
-	}
-
-	public void setUserMail(String userMail) {
-		this.userMail = userMail;
-	}
 
 	public Priority getPriority() {
 		return priority;
@@ -81,6 +87,15 @@ public class Tasks {
 		this.priority = priority;
 	}
 
+	public User getUser() {
+		return user;
+	}
 
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+
+	
 
 }
