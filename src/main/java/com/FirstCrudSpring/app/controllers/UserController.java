@@ -5,16 +5,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.FirstCrudSpring.app.Serices.TaskServiceImpl;
+import com.FirstCrudSpring.app.Serices.UserServiceImpl;
+import com.FirstCrudSpring.app.models.Tasks;
 import com.FirstCrudSpring.app.models.User;
-import com.FirstCrudSpring.app.services.UserService;
-import com.FirstCrudSpring.app.validation.UserValidator;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 
@@ -22,24 +23,14 @@ import jakarta.validation.Valid;
 public class UserController {
 	
 	@Autowired
-	private UserValidator validator;
-	
+	UserServiceImpl userService;
 	@Autowired
-	private UserService service;
-	
-	/*Siempre usamos InitBinder + valid para validar nuestros objetos.
-	 * 
-	 * Solo hacemos uso de .validate() solo si quieres forzar validación fuera de ese flujo.*/
-	@InitBinder
-	public void initBinder(WebDataBinder binder) {
-		binder.addValidators(validator);
-	}
+	TaskServiceImpl taskService;
+
+
 	
 
-	@ModelAttribute("signedUsers")
-	public  List<User> signedUsers(){
-		return service.findAll();
-	}
+
 
 	@GetMapping("/")
 	private String showLogin(Model model) {
@@ -47,13 +38,44 @@ public class UserController {
 		model.addAttribute("user", user);
 		return "login"; 
 	}
+
 	
 	@PostMapping("/")
-	private String validateLogin(@Valid User user, BindingResult result) {
+	private String validateLogin(@Valid User user, BindingResult result,HttpSession session, Errors errors){
 		
+		userService.validate(user,errors);
 		if(result.hasErrors())	return "login";
 		
+		//Si el usuario existe guardamos el mismo en la Httpsession
+		User userSession=userService.findByEmail(user.getEmail());
+		
+	    session.setAttribute("loggedUser", userSession);
+
+		
 		return "redirect:/user";
+	}
+	
+	/*En Spring MVC, cada request HTTP es independiente.
+Cuando haces el POST al endpoint / (login), se crea un objeto User con los datos del formulario.
+Ese objeto no persiste automáticamente entre peticiones, a menos que tú lo guardes manualmente 
+(por ejemplo, en la sesión).
+
+Por eso, cuando luego haces un GET a /user, el parámetro User user no contiene el mismo objeto
+ validado antes — Spring crea un nuevo objeto vacío (o intenta poblarlo desde parámetros del
+  request, si los hay).*/
+	
+	
+	@GetMapping("/user")
+	private String showTasks(Model model,HttpSession session) {
+		
+		//Cargar el ususario logado
+        User user = (User) session.getAttribute("loggedUser");
+		List<Tasks> tasks=taskService.findByEmail(user.getEmail());
+		model.addAttribute("tasks",tasks);
+		model.addAttribute("user", user);
+		return "tasks";
+		
+		
 	}
 
 
