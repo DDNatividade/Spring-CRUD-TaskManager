@@ -2,13 +2,13 @@ package com.FirstCrudSpring.app.Services;
 
 import java.util.List;
 
-import com.FirstCrudSpring.app.models.User;
+import com.FirstCrudSpring.app.models.UserEntity;
 
 public interface UserService  {
 
-	public List <User> listAll();
+	public List <UserEntity> listAll();
 	
-	public User findByEmail(String mail);
+	public UserEntity findByEmail(String mail);
 
 	
 	

@@ -1,10 +1,13 @@
 package com.FirstCrudSpring.app.DAO;
 
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import com.FirstCrudSpring.app.models.User;
+
+import com.FirstCrudSpring.app.models.UserEntity;
 
 
 
@@ -12,11 +15,12 @@ import com.FirstCrudSpring.app.models.User;
 //gestionar las consultas a la base de datos.
 
 @Repository
-public interface UserRepository extends JpaRepository<User, String>{
+public interface UserRepository extends JpaRepository<UserEntity, String>{
 	
 
 	   
 	   @Query(value="SELECT * FROM users WHERE email =?",nativeQuery = true)
-       public User findUserByEmail(String email);
-	   
+       public UserEntity findUserByEmail(String email);
+	   @Query(value="SELECT * FROM users WHERE email =?",nativeQuery = true)
+	   public Optional<UserEntity> searchUserByEmail(String email);
 }

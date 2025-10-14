@@ -1,6 +1,6 @@
 package com.FirstCrudSpring.app.models;
 
-public enum Priority {
+public enum PriorityEnum {
 	   PENDING,
 	    IN_PROGRESS,
 	    DONE

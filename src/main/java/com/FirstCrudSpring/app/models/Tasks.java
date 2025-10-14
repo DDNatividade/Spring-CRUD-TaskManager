@@ -26,7 +26,7 @@ public class Tasks {
 	private String description;
 	
 	@Enumerated(value=EnumType.STRING)
-	private Priority priority;
+	private PriorityEnum priority;
 	
 	@Temporal(TemporalType.DATE)
 	private Date dueDate;
@@ -35,7 +35,7 @@ public class Tasks {
 	
 	@ManyToOne
 	@JoinColumn(name="email")
-	private User user;
+	private UserEntity user;
 
 	public int getId() {
 		return id;
@@ -79,19 +79,19 @@ public class Tasks {
 	}
 
 
-	public Priority getPriority() {
+	public PriorityEnum getPriority() {
 		return priority;
 	}
 
-	public void setPriority(Priority priority) {
+	public void setPriority(PriorityEnum priority) {
 		this.priority = priority;
 	}
 
-	public User getUser() {
+	public UserEntity getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(UserEntity user) {
 		this.user = user;
 	}
 

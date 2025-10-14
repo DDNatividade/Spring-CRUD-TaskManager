@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 
 import com.FirstCrudSpring.app.DAO.UserRepository;
-import com.FirstCrudSpring.app.models.User;
+import com.FirstCrudSpring.app.models.UserEntity;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService{
 	
 	
 	public void validate(Object target, Errors errors) {
-		User user=(User) target;
+		UserEntity user=(UserEntity) target;
 		if(repository.findById(user.getEmail()).isEmpty()) {
 			errors.reject("err", "Usuario no localizado");
 		}
@@ -27,13 +27,13 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
-	public List<User> listAll() {
+	public List<UserEntity> listAll() {
 		// TODO Auto-generated method stub
 		return repository.findAll();
 	}
 
 	@Override
-	public User findByEmail(String email) {
+	public UserEntity findByEmail(String email) {
 		// TODO Auto-generated method stub
 		return repository.findUserByEmail(email);
 	}
