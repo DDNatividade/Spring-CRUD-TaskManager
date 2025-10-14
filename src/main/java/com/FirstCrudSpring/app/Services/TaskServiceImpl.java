@@ -1,4 +1,4 @@
-package com.FirstCrudSpring.app.Serices;
+package com.FirstCrudSpring.app.Services;
 
 import java.util.List;
 

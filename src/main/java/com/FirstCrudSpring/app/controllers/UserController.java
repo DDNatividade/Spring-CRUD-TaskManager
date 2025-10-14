@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.FirstCrudSpring.app.Serices.TaskServiceImpl;
-import com.FirstCrudSpring.app.Serices.UserServiceImpl;
+import com.FirstCrudSpring.app.Services.TaskServiceImpl;
+import com.FirstCrudSpring.app.Services.UserServiceImpl;
 import com.FirstCrudSpring.app.models.Tasks;
 import com.FirstCrudSpring.app.models.User;
 
