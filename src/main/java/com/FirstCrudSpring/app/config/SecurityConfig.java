@@ -23,8 +23,7 @@ public class SecurityConfig {
 	@Bean
     public SecurityFilterChain filterChain(HttpSecurity httpS) throws Exception {
         return httpS
-        //Cuando nos loggeamos solo con ususario y contraseña
-         .httpBasic(Customizer.withDefaults())
+
          
          //Configuración de la página de login de la web 
          //Cumple la función del post en el formulario.
@@ -48,10 +47,13 @@ public class SecurityConfig {
          
        //Permiso por cada endpoint
          .authorizeHttpRequests(http -> {
+        	 
+        	 
              // Configurar los endpoints publicos 
              http.requestMatchers(HttpMethod.GET, "/").permitAll();
 
              // Cofnigurar los endpoints privados
+             http.requestMatchers(HttpMethod.GET, "/user/**").hasAnyRole("ADMIN", "USER");
              http.requestMatchers(HttpMethod.POST, "/user/**").hasAnyRole("ADMIN", "USER");
              http.requestMatchers(HttpMethod.PATCH, "/auth/patch").hasAnyAuthority("REFACTOR");
 
