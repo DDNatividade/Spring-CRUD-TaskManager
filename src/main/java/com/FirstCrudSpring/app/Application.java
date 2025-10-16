@@ -1,7 +1,6 @@
 package com.FirstCrudSpring.app;
 
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -10,8 +9,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.FirstCrudSpring.app.DAO.UserRepository;
-import com.FirstCrudSpring.app.models.PermissionEntity;
+import com.FirstCrudSpring.app.DAO.PermissionRepository;
+import com.FirstCrudSpring.app.Services.RoleService;
+import com.FirstCrudSpring.app.Services.UserService;
 import com.FirstCrudSpring.app.models.RoleEntity;
 import com.FirstCrudSpring.app.models.RoleEnum;
 import com.FirstCrudSpring.app.models.UserEntity;
@@ -29,44 +29,14 @@ public class Application {
 
 	
 	@Bean
-    CommandLineRunner init(UserRepository userRepository) {
+    CommandLineRunner init(UserService userService, PermissionRepository permissionRepo, RoleService roleService) {
 
         return args -> {
-            /* Create PERMISSIONS */
-            PermissionEntity createPermission = PermissionEntity.builder()
-                    .name("CREATE")
-                    .build();
 
-            PermissionEntity readPermission = PermissionEntity.builder()
-                    .name("READ")
-                    .build();
+        	RoleEntity roleAdmin = roleService.findById((long) 1);
 
-            PermissionEntity updatePermission = PermissionEntity.builder()
-                    .name("UPDATE")
-                    .build();
 
-            PermissionEntity deletePermission = PermissionEntity.builder()
-                    .name("DELETE")
-                    .build();
-
-            PermissionEntity refactorPermission = PermissionEntity.builder()
-                    .name("REFACTOR")
-                    .build();
-
-            /* Create ROLES */
-            RoleEntity roleAdmin = RoleEntity.builder()
-                    .roleEnum(RoleEnum.ADMIN)
-                    .permissionList(Set.of(createPermission, readPermission, updatePermission, deletePermission))
-                    .build();
-
-            RoleEntity roleUser = RoleEntity.builder()
-                    .roleEnum(RoleEnum.USER)
-                    .permissionList(Set.of(createPermission, readPermission))
-                    .build();
-
-            /* CREATE USERS */
-
-            
+            /* CREATE USERS */     
             UserEntity userDaniel = UserEntity.builder()
             		.name("Daniel")
             		.surname("de Natividade")
@@ -77,9 +47,9 @@ public class Application {
             		.tasks(null)
             		.build();
             		
+//Añadimos los datos creados
 
-           
-            userRepository.saveAll(List.of(userDaniel));
+            userService.saveUser(List.of(userDaniel));
         };
     }
 

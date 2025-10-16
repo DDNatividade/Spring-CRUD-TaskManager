@@ -41,6 +41,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
      
 
+        //Nuevo objeto que spring security usará para gestionar permisos. Se elimina al cerrar sesión
         return new org.springframework.security.core.userdetails.User(user.getEmail(),
                 user.getPassword(),
                 user.isEnabled(),

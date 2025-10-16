@@ -18,10 +18,14 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 
-@Builder
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "roles")
 public class RoleEntity {
 
@@ -39,7 +43,7 @@ public class RoleEntity {
     
     
 	
-    @OneToMany(mappedBy ="roles", cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy ="rol", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<UserEntity> users;
 
 

@@ -26,11 +26,25 @@ public class SecurityConfig {
         //Cuando nos loggeamos solo con ususario y contraseña
          .httpBasic(Customizer.withDefaults())
          
-         //Configuración de la página de login de la web
+         //Configuración de la página de login de la web 
+         //Cumple la función del post en el formulario.
 		.formLogin(form -> form
-			.loginPage("/")
-			.permitAll()
-		)
+			    .loginPage("/")                // <- Esta página muestra tu formulario "login.html"
+			    .loginProcessingUrl("/login")  // <- Aquí se envían los datos (POST)
+			    .defaultSuccessUrl("/user", true) // <- A dónde ir tras autenticarse
+			    .failureUrl("/?error")          // <- aquí define qué parámetro se añade cuando hay un fallo. Dicho parámetro
+			//podremos hacer uso de el en el formulario.
+			    .usernameParameter("email") // aquí le dices que use "email" en vez de "username" para validar en el formulario
+			    // de lo contrario usa "userName"
+			    .permitAll()
+			    )
+		
+		//Caso de logout
+		.logout(logout -> logout
+			    .logoutUrl("/logout")
+			    .logoutSuccessUrl("/?logout")
+			    .permitAll()
+			    )
          
        //Permiso por cada endpoint
          .authorizeHttpRequests(http -> {
@@ -48,6 +62,7 @@ public class SecurityConfig {
             
     }
 	
+	@SuppressWarnings("deprecation")
 	@Bean
     public AuthenticationProvider authenticationProvider(UserDetailsService userDetailService){
 		

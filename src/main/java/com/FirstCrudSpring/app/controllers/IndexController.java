@@ -26,22 +26,11 @@ public class IndexController {
 
 	@GetMapping("/")
 	private String showLogin(Model model) {
+		UserEntity user= new UserEntity();
+		model.addAttribute("user", new UserEntity());
 		return "login"; 
 	}
 
 	
-	@PostMapping("/")
-	private String validateLogin(@Valid UserEntity user, BindingResult result,HttpSession session, Errors errors){
-		
-		userService.validate(user,errors);
-		if(result.hasErrors())	return "login";
-		
-		//Si el usuario existe guardamos el mismo en la Httpsession
-		UserEntity userSession=userService.findByEmail(user.getEmail());
-		
-	    session.setAttribute("loggedUser", userSession);
 
-		
-		return "redirect:/user";
-	}
 }

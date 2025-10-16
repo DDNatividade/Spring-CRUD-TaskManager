@@ -1,3 +1,4 @@
+
 package com.FirstCrudSpring.app.models;
 
 import java.util.List;
@@ -11,13 +12,19 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 
-@Builder
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "users")
 public class UserEntity {
 
+	
+	
 	@Id
 	@NotEmpty
 	private String email;
@@ -33,13 +40,17 @@ public class UserEntity {
 	private boolean isEnabled;
 
 	@ManyToOne
-	@JoinColumn(name = "role_id")
+	@JoinColumn(name = "role_Entity")
 	private RoleEntity rol;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Tasks> tasks;
 
 
+	
+	
+	
+	
 
 	public List<Tasks> getTasks() {
 		return tasks;
