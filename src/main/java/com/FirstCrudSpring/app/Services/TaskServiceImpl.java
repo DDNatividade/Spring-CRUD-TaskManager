@@ -9,7 +9,10 @@ import org.springframework.stereotype.Service;
 import com.FirstCrudSpring.app.DAO.TaskRepository;
 import com.FirstCrudSpring.app.models.Tasks;
 
+import jakarta.transaction.Transactional;
+
 @Service
+@Transactional
 public class TaskServiceImpl implements TaskService {
 
 	@Autowired
@@ -24,7 +27,8 @@ public class TaskServiceImpl implements TaskService {
 	@Override
 	public Tasks findById(int id) {
 		// TODO Auto-generated method stub
-		return repository.findById(id).get();
+		return repository.findById(id).orElseThrow(() -> new RuntimeException("Task not found"));
+
 	}
 
 	@Override
@@ -43,6 +47,17 @@ public class TaskServiceImpl implements TaskService {
 	public List<Tasks> sortedByDateUp() {
 		// TODO Auto-generated method stub
 		return repository.findAll(Sort.by(Sort.Direction.ASC, "dueDate"));
+	}
+
+	@Override
+	public void saveTask(Tasks task) {
+		repository.save(task);
+		
+	}
+
+	@Override
+	public void deleteTask(Tasks task) {
+		repository.delete(task);
 	}
 	
 	

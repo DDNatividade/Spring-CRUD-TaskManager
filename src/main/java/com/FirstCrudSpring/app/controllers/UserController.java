@@ -11,9 +11,9 @@ import com.FirstCrudSpring.app.Services.TaskServiceImpl;
 import com.FirstCrudSpring.app.Services.UserServiceImpl;
 import com.FirstCrudSpring.app.models.Tasks;
 import com.FirstCrudSpring.app.models.UserEntity;
+import org.springframework.security.core.userdetails.User;
 
-
-@Controller()
+@Controller
 public class UserController {
 	
 	@Autowired
@@ -23,9 +23,9 @@ public class UserController {
 
 	
 	@GetMapping("/user")
-	private String showTasks(Model model, @AuthenticationPrincipal UserEntity springUser) {
+	private String showTasks(Model model, @AuthenticationPrincipal User springUser) {
 
-	    String email = springUser.getEmail();
+	    String email = springUser.getUsername();
 	    UserEntity user = userService.findByEmail(email);
 	    List<Tasks> tasks = taskService.findByEmail(email);
 

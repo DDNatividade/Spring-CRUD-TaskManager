@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -53,9 +52,14 @@ public class SecurityConfig {
              http.requestMatchers(HttpMethod.GET, "/").permitAll();
 
              // Cofnigurar los endpoints privados
+             http.requestMatchers(HttpMethod.GET, "/tasks/**").hasAnyAuthority("CREATE");
+             http.requestMatchers(HttpMethod.POST, "/tasks/**").hasAnyAuthority("CREATE");
+
              http.requestMatchers(HttpMethod.GET, "/user/**").hasAnyRole("ADMIN", "USER");
              http.requestMatchers(HttpMethod.POST, "/user/**").hasAnyRole("ADMIN", "USER");
-             http.requestMatchers(HttpMethod.PATCH, "/auth/patch").hasAnyAuthority("REFACTOR");
+             
+             http.requestMatchers(HttpMethod.GET, "/edit/**").hasAnyAuthority("CREATE");
+             http.requestMatchers(HttpMethod.POST, "/edit/**").hasAnyAuthority("CREATE");
 
              // Configurar el resto de endpoint - NO ESPECIFICADOS ANTES
              http.anyRequest().denyAll(); //También podemos usar .Autenticate(). Si el usuario es seguro permite el acceso 
@@ -64,7 +68,6 @@ public class SecurityConfig {
             
     }
 	
-	@SuppressWarnings("deprecation")
 	@Bean
     public AuthenticationProvider authenticationProvider(UserDetailsService userDetailService){
 		

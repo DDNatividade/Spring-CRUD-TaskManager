@@ -15,8 +15,11 @@ import com.FirstCrudSpring.app.DAO.UserRepository;
 import com.FirstCrudSpring.app.models.PermissionEntity;
 import com.FirstCrudSpring.app.models.UserEntity;
 
+import jakarta.transaction.Transactional;
+
 
 @Service
+@Transactional
 public class UserDetailsServiceImpl implements UserDetailsService {
 	
 	@Autowired

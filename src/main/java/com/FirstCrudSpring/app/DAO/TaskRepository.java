@@ -11,6 +11,8 @@ import com.FirstCrudSpring.app.models.Tasks;
 @Repository
 public interface TaskRepository extends JpaRepository<Tasks, Integer>{
 	@Query(value="SELECT * FROM tasks WHERE email =?",nativeQuery = true)
-	   List<Tasks> findTasksByEmail(String Emil);
+	   List<Tasks> findTasksByEmail(String Email);
+	
+	
 	
 }

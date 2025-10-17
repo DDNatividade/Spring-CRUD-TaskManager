@@ -34,7 +34,7 @@ public class Tasks {
 	private String category;
 	
 	@ManyToOne
-	@JoinColumn(name="email")
+	@JoinColumn(name="email", nullable=false)
 	private UserEntity user;
 
 	public int getId() {
@@ -94,6 +94,8 @@ public class Tasks {
 	public void setUser(UserEntity user) {
 		this.user = user;
 	}
+
+
 
 
 	

@@ -9,7 +9,7 @@ import com.FirstCrudSpring.app.Services.UserServiceImpl;
 import com.FirstCrudSpring.app.models.UserEntity;
 
 
-@Controller()
+@Controller
 public class IndexController {
 
 	@Autowired
